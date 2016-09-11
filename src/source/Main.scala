@@ -24,6 +24,7 @@ object Main {
 
   def main(args: Array[String]) {
     var idlFile: File = null
+    var jsExt: String = "emb"
     var cppOutFolder: Option[File] = None
     var cppNamespace: String = ""
     var cppIncludePrefix: String = ""
@@ -113,6 +114,8 @@ object Main {
       opt[Boolean]("java-use-final-for-record").valueName("<use-final-for-record>").foreach(x => javaUseFinalForRecord = x)
         .text("Whether generated Java classes for records should be marked 'final' (default: true). ")
       note("")
+      opt[String]("js-ext").valueName("<ext>").foreach(jsExt = _)
+        .text("The filename extension for Emscripten binding files (default: \"emb\").")
       opt[File]("cpp-out").valueName("<out-folder>").foreach(x => cppOutFolder = Some(x))
         .text("The output folder for C++ files (Generator disabled if unspecified).")
       opt[File]("cpp-header-out").valueName("<out-folder>").foreach(x => cppHeaderOutFolderOptional = Some(x))
@@ -289,6 +292,7 @@ object Main {
       javaNullableAnnotation,
       javaNonnullAnnotation,
       javaUseFinalForRecord,
+      jsExt,
       cppOutFolder,
       cppHeaderOutFolder,
       cppIncludePrefix,
