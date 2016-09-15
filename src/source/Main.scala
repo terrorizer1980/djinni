@@ -25,6 +25,8 @@ object Main {
   def main(args: Array[String]) {
     var idlFile: File = null
     var jsExt: String = "cxx"
+    var jsOutFolder: Option[File] = None
+    var jsBaseLibIncludePrefix: String = ""
     var cppOutFolder: Option[File] = None
     var cppNamespace: String = ""
     var cppIncludePrefix: String = ""
@@ -116,6 +118,10 @@ object Main {
       note("")
       opt[String]("js-ext").valueName("<ext>").foreach(jsExt = _)
         .text("The filename extension for Emscripten binding files (default: \"emb\").")
+      opt[File]("js-out").valueName("<out-folder>").foreach(x => jsOutFolder = Some(x))
+        .text("The output folder for Js files (Generator disabled if unspecified).")
+      opt[String]("js-base-lib-include-prefix").valueName("<prefix>").foreach(x => jsBaseLibIncludePrefix = x)
+        .text("The Js base library's include path, relative to the Js classes.")
       opt[File]("cpp-out").valueName("<out-folder>").foreach(x => cppOutFolder = Some(x))
         .text("The output folder for C++ files (Generator disabled if unspecified).")
       opt[File]("cpp-header-out").valueName("<out-folder>").foreach(x => cppHeaderOutFolderOptional = Some(x))
@@ -293,6 +299,8 @@ object Main {
       javaNonnullAnnotation,
       javaUseFinalForRecord,
       jsExt,
+      jsOutFolder,
+      jsBaseLibIncludePrefix,
       cppOutFolder,
       cppHeaderOutFolder,
       cppIncludePrefix,
