@@ -1,4 +1,4 @@
-FROM ubuntu:trusty
+FROM ubuntu:trusty-20190425
 
 RUN apt-get update
 RUN apt-get -y install build-essential clang-3.5 cmake
